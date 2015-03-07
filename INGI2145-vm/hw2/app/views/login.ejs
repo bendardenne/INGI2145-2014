@@ -43,13 +43,27 @@ $( "#validate" ).submit(function( event ) {
     username = $form.find( "input[name='user']" ).val(),
     password = $form.find( "input[name='pass']" ).val(),
     url = $form.attr( "action" );
+
+  if(username === "" || password === ""){
+    $("#message").empty().append("Please fill in both fields."); 
+    return;
+  }
  
-  // TODO: Implement Ajax request
+  var posting = $.post(url, {username: username, password: password});
+
+  posting.done(function(o) {
+    window.location.replace(o.url);    
+  })
+  .fail(function(h) {
+    var o = h.responseJSON;
+    $("#message").empty().append(o.message);   
+  }) 
+
 });
 </script>
 	<footer>
 		<div class="wrapper">
-			A Twitter Clone by YOUR NAME HERE
+			A Twitter Clone by Benoît Dardenne
 		</div>
 	</footer>
 </body>

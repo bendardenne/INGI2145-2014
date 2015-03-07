@@ -18,8 +18,21 @@ $( "#newTweet" ).submit(function( event ) {
   var $form = $( this ),
     text = $form.find( "textarea[name='text']" ).val(),
     url = $form.attr( "action" );
- 
-  // TODO: Implement Ajax request
+  
+  if(text === ""){
+    $("#result").empty().append("Your tweet is empty!"); 
+    return;
+  }
+  
+  var posting = $.post(url, {text: text});
+  
+  posting.done(function(o) {
+    $("#result").empty().append(o.message);   
+  }) 
+  .fail(function(h) {
+    var o = h.responseJSON;
+    $("#result").empty().append(o.message);   
+  }) 
 });
 </script>
 <div id="ribbits" class="panel left">

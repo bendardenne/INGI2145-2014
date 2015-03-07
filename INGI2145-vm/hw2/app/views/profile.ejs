@@ -9,6 +9,7 @@
     </p>
 </div>
 <script>
+/*
 $( "#newTweet" ).submit(function( event ) {
  
   // Stop form from submitting normally
@@ -30,15 +31,15 @@ $( "#newTweet" ).submit(function( event ) {
     var o = h.responseJSON;
     $( "#result" ).empty().append( o.message );
   });
-});
+}); */
 </script>
 <div id="ribbits" class="panel left">
 	<h1><%= title %></h1>
     <div>
         <% if (following == false) { %>
-            <a href="/usr/<%= username %>/follow">Follow</a>
+            <a href="/follow" id="follow">Follow</a>
         <% } else if (following == true) { %>
-            <a href="/usr/<%= username %>/unfollow">Unfollow</a>
+            <a href="/unfollow" id="follow" >Unfollow</a>
         <% } %>
     </div>
     <% for(var i=0; i < tweets.length; i++) { %>
@@ -54,3 +55,15 @@ $( "#newTweet" ).submit(function( event ) {
 	    </div>
     <% } %>
 </div>
+<script>
+$("#follow").click(function(event) {
+ 
+  event.preventDefault();
+  var url = $("#follow").attr("href");
+  var posting = $.post( url, { target_username: "<%= username %>" } );
+ 
+  posting.done(function( o ) {
+      window.location.reload();
+  })
+});
+</script>

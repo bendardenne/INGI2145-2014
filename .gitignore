@@ -1,3 +1,4 @@
 .DS_Store
 INGI2145-vm/.vagrant
 INGI2145-vm/lab2/node_modules
+/INGI2145-vm/hw1/.nb-gradle/profiles/private/

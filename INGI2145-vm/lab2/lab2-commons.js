@@ -3,7 +3,7 @@
 
 var self = {
 	
-        table_name: 'INGI2145_something_unique',
+        table_name: 'INGI2145_bdardenne',
 
 	//---- Handles client requests and performs necessary operations---
 	handle_request: function(db, parsed_request, res, list_of_attributes, caching_mode)

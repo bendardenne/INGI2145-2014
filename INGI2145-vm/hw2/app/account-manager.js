@@ -18,13 +18,13 @@ exports.manualLogin = function(user, pass, accounts, callback)
 {
 	accounts.findOne({username:user}, function(e, o) {
 		if (o == null){
-			callback('user-not-found');
+			callback('Username not found');
 		}	else{
 			validatePassword(pass, o.pass, function(err, res) {
 				if (res){
 					callback(null, o);
 				}	else{
-					callback('invalid-password');
+					callback('Invalid password');
 				}
 			});
 		}

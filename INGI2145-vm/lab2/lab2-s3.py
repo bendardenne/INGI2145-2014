@@ -14,7 +14,7 @@ from boto.s3.key import Key
 # export AWS_SECRET_ACCESS_KEY='SECRET'
 
 # Tutorial params
-bucket_name = 'mybucket420932840932843209'
+bucket_name = 'ingi2145-bdardenne'
 dl_path = "~/temp/files/"
 
 #Step 1 -- Connect to Amazon S3
@@ -29,6 +29,10 @@ for i in object_dict.keys():
   k = Key(bucket)
   k.key = i
   k.set_contents_from_string(object_dict.get(i))
+
+k = Key(bucket)
+k.key = 'toges'
+k.set_contents_from_filename('toges.jpg')
 
 #List objects inside the newly created bucket
 bucket_list = bucket.list()
@@ -64,6 +68,6 @@ if not file_check:
   print 'All objects have already been written. Exiting..'
 
 #Step 6 -- Delete all objects inside a bucket, then delete bucket
-result = bucket.delete_keys([key.name for key in bucket_list])
-conn.delete_bucket(bucket_name) #Note that bucket must be empty before it's deleted
+#result = bucket.delete_keys([key.name for key in bucket_list])
+#conn.delete_bucket(bucket_name) #Note that bucket must be empty before it's deleted
 

@@ -80,15 +80,31 @@ app.use(function(err, req, res, next) {
 // 2) Connect to Kafka
 // 3) Start the HTTP server
 mongo.connect('mongodb://localhost:27017/twitter', function(err, db) {
-    
-    // TODO: error handling
+
+    assert.equal(null, err);    
 
     console.log("connected to MongoDB");
     app.db = db;
 
-    // var client = new kafka.Client('localhost:2181');
-    // app.producer = new kafka.Producer(client);
+    app.users = db.collection('users');
+    app.tweets = db.collection('tweets');
 
+    app.users.dropAllIndexes(function() {});
+    app.tweets.dropAllIndexes(function() {});
+
+    // Only query operation is find by username, so we want to index that
+    db.ensureIndex("users", { username: 1}, function(err, indexname) {
+            assert.equal(null, err);
+        }); 
+    
+    // We will often want to get tweets by username, and sorted in reverse chronological order
+    db.ensureIndex("tweets", { username: 1, created_at: -1}, function(err, indexname) {
+            assert.equal(null, err);
+        }); 
+    
+    var client = new kafka.Client('localhost:2181');
+    app.producer = new kafka.Producer(client);
+    
     var server = app.listen(3000, function () {
         var host = server.address().address;
         var port = server.address().port;
